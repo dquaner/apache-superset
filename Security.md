@@ -65,19 +65,11 @@ FAB 提供了非常细粒度的权限，并且允许大力度的自定义。FAB 
 - 创建子句为 (`department = "finance"`) 的 Row Level Security 过滤器
 - 然后将该子句分配给 **Finance** 角色以及相应的表
 
-The **clause** field, which can contain arbitrary text, is then added to the generated
-SQL statement’s WHERE clause. So you could even do something like create a filter
-for the last 30 days and apply it to a specific role, with a clause
-like `date_field > DATE_SUB(NOW(), INTERVAL 30 DAY)`. It can also support
-multiple conditions: `client_id = 6` AND `advertiser="foo"`, etc.
+然后，这个可以包含任意文本的 **clause** 字段将被添加到生成的 SQL 语句的 WHERE 子句中。也就是说，你甚至可以使用子句 `date_field > DATE_SUB(NOW(), INTERVAL 30 DAY)` 创建一个最近 30 天的过滤器，并将其应用于特定角色。子句还支持多条件，例如：`client_id = 6` AND `advertiser="foo"` 等。
 
-All relevant Row level security filters will be combined together (under the hood,
-the different SQL clauses are combined using AND statements). This means it's
-possible to create a situation where two roles conflict in such a way as to limit a table subset to empty.
+所有相关的行级安全过滤器将组合在一起（在底层，不同的 SQL 子句使用 AND 语句组合在一起）。这意味着可以创建两个冲突的情况，从而将表的子集限制为空。
 
-For example, the filters `client_id=4` and `client_id=5`, applied to a role,
-will result in users of that role having `client_id=4` AND `client_id=5`
-added to their query, which can never be true.
+例如，将 `client_id=4` 和 `client_id=5` 应用到一个角色上，将导致该角色下的用户在进行查询时被添加 `client_id=4` AND `client_id=5` 条件，然而该条件不可能满足。
 
 ## 内容安全策略 (CSP)
 
@@ -116,9 +108,7 @@ Production 模式下，Superset 将在启动时检查 CSP 是否存在，如果�
   connect-src 'self' https://api.mapbox.com https://events.mapbox.com
   ```
 
-This is a basic example `TALISMAN_CONFIG` that implements the above requirements, uses `'self'` to
-limit content to the same origin as the Superset server, and disallows outdated HTML elements by
-setting `object-src` to `'none'`.
+下面是一个基础的 `TALISMAN_CONFIG` 示例，实现了上面的所有需求：使用 `'self'` 将内容限制在与 Superset 服务器相同的来源；并通过将 `object-src` 设置为 `'none'` 禁用过时的 HTML 元素。
 
 ```python
 TALISMAN_CONFIG = {
@@ -134,16 +124,10 @@ TALISMAN_CONFIG = {
 
 ### 其他 Talisman 安全注意事项
 
-Setting `TALISMAN_ENABLED = True` will invoke Talisman's protection with its default arguments,
-of which `content_security_policy` is only one. Those can be found in the
-[Talisman documentation](https://pypi.org/project/flask-talisman/) under *Options*.
-These generally improve security, but administrators should be aware of their existence.
+设置 `TALISMAN_ENABLED = True` 将以默认参数调用 Talisman 的保护机制。这种情况下，`content_security_policy` 只有一个。查看
+[Talisman documentation](https://pypi.org/project/flask-talisman/) 的 *Options* 章节。默认配置通常足以提高安全性，但管理员应该了解它们。
 
-In particular, the default option of `force_https = True` may break Superset's Alerts & Reports
-if workers are configured to access charts via a `WEBDRIVER_BASEURL` beginning
-with `http://`.  As long as a Superset deployment enforces https upstream, e.g.,
-through a loader balancer or application gateway, it should be acceptable to set this
-option to `False`, like this:
+特别是，默认选项 `force_https = True` 可能会破坏 Superset 的 Alerts & Reports（如果 workers 被配置为通过以 `http://` 开头的 `WEBDRIVER_BASEURL` 来访问图表）。只要一个 Superset 部署强制了 https 上游，例如通过一个 loader balancer 或 application gateway ，是可以接受将该选项设置为 `False` 的，如下所示:
 
 ```python
 TALISMAN_CONFIG = {
