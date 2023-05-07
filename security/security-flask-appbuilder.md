@@ -2,18 +2,17 @@
 
 ## 披露责任
 
-我们希望确保 Flask-AppBuilder 对每个人都安全。如果您发现了安全漏洞
-请报告给 `danielvazgaspar@gmail.com` 。
+我们希望确保 Flask-AppBuilder 对每个人都安全。如果您发现了安全漏洞 请报告给 `danielvazgaspar@gmail.com` 。
 
 ## 支持的认证类型
 
-Type        | Explanation
----         | ---
-Database    | 从数据库查询要匹配的用户名和密码样式。密码在数据库中以哈希值保存。
-Open ID     | 通过用户的电子邮件使用 Gmail，Yahoo 等进行身份验证。
-LDAP        | 针对 LDAP 服务器的身份验证，如 Microsoft Active Directory 。
-REMOTE_USER | 读取 *REMOTE_USER* 网络服务器环境变量，并验证它是否被框架用户表授权。当服务器（Apache, Nginx）配置为使用 kerberos 时，网络服务器负责对用户进行身份验证。这对于内部网站点很有用，用户不需要在 F.A.B 上使用用户名和密码登录。
-OAUTH       | 使用 OAUTH (v1 or v2) 进行认证，需要安装 authlib 。
+| Type         | Explanation                                                                                                                           |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Database     | 从数据库查询要匹配的用户名和密码样式。密码在数据库中以哈希值保存。                                                                                                     |
+| Open ID      | 通过用户的电子邮件使用 Gmail，Yahoo 等进行身份验证。                                                                                                      |
+| LDAP         | 针对 LDAP 服务器的身份验证，如 Microsoft Active Directory 。                                                                                       |
+| REMOTE\_USER | 读取 _REMOTE\_USER_ 网络服务器环境变量，并验证它是否被框架用户表授权。当服务器（Apache, Nginx）配置为使用 kerberos 时，网络服务器负责对用户进行身份验证。这对于内部网站点很有用，用户不需要在 F.A.B 上使用用户名和密码登录。 |
+| OAUTH        | 使用 OAUTH (v1 or v2) 进行认证，需要安装 authlib 。                                                                                               |
 
 在 `config.py` 中配置认证类型，查看 [Base Configuration](https://flask-appbuilder.readthedocs.io/en/latest/config.html) 页面。
 
@@ -33,7 +32,7 @@ from flask_appbuilder.security.manager import (
 )
 ```
 
-然后使用 **AUTH_TYPE** 来选择认证方法：
+然后使用 **AUTH\_TYPE** 来选择认证方法：
 
 ```python
 AUTH_TYPE = AUTH_DB
@@ -61,7 +60,7 @@ AUTH_USER_REGISTRATION_ROLE = "My Public Role Name"
 
 > 注意：想要使用 OAuth 认证，你需要首先安装 [Python AuthLib](https://authlib.org) 。
 
-在 `config.py` 文件中指定允许用户使用的 OAUTH_PROVIDERS 列表：
+在 `config.py` 文件中指定允许用户使用的 OAUTH\_PROVIDERS 列表：
 
 ```python
 AUTH_TYPE = AUTH_OAUTH
@@ -196,13 +195,13 @@ OAUTH_PROVIDERS = [
 
 这里需要做一点解释，基本上来说有以下 5 个关键字：
 
-Key         | Explanation
----         | ---
-name        | OAuth Provider 的名称，你可以指定任意你想要使用的名称；但 FAB 为以下名称编写好了 `BaseSecurityManager.get_oauth_user_info()` 逻辑：`azure` ，`github` ，`google` ，`keycloak` ，`keycloak_before_17` ，`linkedin` ，`okta` ，`openshift` ，`twitter`
-icon        | 该 Provider 的 font-awesome 图标
-token_key   | 该 Provider 使用的 token key 名称，默认情况下为 `oauth_token`
-token_secret| token secret key 名称，默认情况下为 `oauth_token_secret`
-remote_app  | 真正的 Provider API 的配置
+| Key           | Explanation                                                                                                                                                                                                 |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name          | OAuth Provider 的名称，你可以指定任意你想要使用的名称；但 FAB 为以下名称编写好了 `BaseSecurityManager.get_oauth_user_info()` 逻辑：`azure` ，`github` ，`google` ，`keycloak` ，`keycloak_before_17` ，`linkedin` ，`okta` ，`openshift` ，`twitter` |
+| icon          | 该 Provider 的 font-awesome 图标                                                                                                                                                                                |
+| token\_key    | 该 Provider 使用的 token key 名称，默认情况下为 `oauth_token`                                                                                                                                                            |
+| token\_secret | token secret key 名称，默认情况下为 `oauth_token_secret`                                                                                                                                                             |
+| remote\_app   | 真正的 Provider API 的配置                                                                                                                                                                                        |
 
 你可以基于 OAuth 群组来给 FlaskAppBuilder 定义角色：
 
@@ -256,15 +255,15 @@ def my_user_info_getter(sm, provider, response=None):
 
 With one provider:
 
-![oauth_login_one_provider](./images/oauth_login_one_provider.webp)
+![oauth\_login\_one\_provider](images/oauth\_login\_one\_provider.webp)
 
 With multiple providers:
 
-![oauth_login](./images/oauth_login.webp)
+![oauth\_login](images/oauth\_login.webp)
 
 注意，在 Flask-AppBuilder 3.3.X 版本，会自动跳转到 provider 的允许页面。
 
-使用 SecurityManager 的 `oauth_user_info_getter` 装饰器修饰你的方法。你的方法应该返回一个包含 userinfo 的字典，其中的键具有与 User Model 相同的列名，方法将在用户获得了 OAuth  Provider 授权之后调用，查看 [example](https://github.com/dpgaspar/Flask-AppBuilder/tree/master/examples/oauth) 。
+使用 SecurityManager 的 `oauth_user_info_getter` 装饰器修饰你的方法。你的方法应该返回一个包含 userinfo 的字典，其中的键具有与 User Model 相同的列名，方法将在用户获得了 OAuth Provider 授权之后调用，查看 [example](https://github.com/dpgaspar/Flask-AppBuilder/tree/master/examples/oauth) 。
 
 你还可以使用 OAuth Provider APIs：可以做到发送 tweets，发布 Facebook，检索用户的 LinkedIn 个人资料等。查看 [example](https://github.com/dpgaspar/Flask-AppBuilder/tree/master/examples/oauth) 了解它的简单用法。
 
@@ -326,10 +325,10 @@ FAB_ROLES_MAPPING = {
 
 有两种特定的角色，你可以在 [Base Configuration](https://flask-appbuilder.readthedocs.io/en/latest/config.html) 中定义它们的名字：
 
-Role        | Explanation
----         | ---
-Admin Role  | 特殊的内置只读角色，将具有全部访问权限。
-Public Role | 这是一个针对非认证用户的特殊角色，你可以将视图和菜单的任意权限分配给该角色，并且每个人都将可以访问应用程序的特定部分。
+| Role        | Explanation                                                 |
+| ----------- | ----------------------------------------------------------- |
+| Admin Role  | 特殊的内置只读角色，将具有全部访问权限。                                        |
+| Public Role | 这是一个针对非认证用户的特殊角色，你可以将视图和菜单的任意权限分配给该角色，并且每个人都将可以访问应用程序的特定部分。 |
 
 当然，你可以创建任何您想要的其他角色，并按照喜欢的方式配置它们。
 
@@ -339,37 +338,37 @@ FAB 框架通过“检查”你的代码，自动为你创建视图、API或菜�
 
 每次你基于 model 新建一个视图时（继承 ModelView），FAB 会为你创建以下权限：
 
-- can list
-- can show
-- can add
-- can edit
-- can delete
-- can download
+* can list
+* can show
+* can add
+* can edit
+* can delete
+* can download
 
 创建 CRUD REST API 时：
 
-- can get
-- can put
-- can post
-- can delete
-- can info
+* can get
+* can put
+* can post
+* can delete
+* can info
 
 这些基础权限会关联到你的视图或 API，也就是说，当你创建一个名为 `MyModelView` 的视图时，你可以将以下权限分配给任意角色：
 
-- can list on MyModelView
-- can show on MyModelView
-- can add on MyModelView
-- can edit on MyModelView
-- can delete on MyModelView
-- can download on MyModelView
+* can list on MyModelView
+* can show on MyModelView
+* can add on MyModelView
+* can edit on MyModelView
+* can delete on MyModelView
+* can download on MyModelView
 
 当你开发一个名为 `MyApi` 的后端 REST API 时（ `ModelRestApi` 的子类），会生成以下权限：
 
-- can get on MyApi
-- can put on MyApi
-- can post on MyApi
-- can delete on MyApi
-- can info on MyApi
+* can get on MyApi
+* can put on MyApi
+* can post on MyApi
+* can delete on MyApi
+* can info on MyApi
 
 如果你通过 `@expose` 装饰器来披露一些用来扩展你的视图的方法，并且想保护这些方法，可以使用 `@has_access` 装饰器：
 
@@ -386,12 +385,11 @@ class MyModelView(ModelView):
 
 FAB 框架会根据你的方法名创建如下权限：
 
-- can mymethod on MyModelView
+* can mymethod on MyModelView
 
 如果不需要为一组方法创建细粒度的权限，你可以使用 `@permission_name` 装饰器来将一组方法聚合到单个权限中，，这样做可以简化安全配置。使用 `@permission_name` 可以将权限名重写为你喜欢的任何名称。
 
 查看 [API Reference](https://flask-appbuilder.readthedocs.io/en/latest/api.html) 。
-
 
 ### 自定义权限
 
@@ -409,11 +407,11 @@ class TwoApi(ModelRestApi):
 
 前面的示例将生成默认权限的一半，只创建以下内容：
 
-- can get on api
-- can put on api
-- can post on api
-- can delete on api
-- can info on api
+* can get on api
+* can put on api
+* can post on api
+* can delete on api
+* can info on api
 
 属性 `class_permission_name` 也可以在 BaseViews 和它们的子类中使用，如 `ModelView` ，`MultipleView` ，`MasterDetailView` ，`FormView` 等。
 
@@ -456,7 +454,7 @@ class TwoApi(ModelRestApi):
 
 现在 FAB 只会生成一个权限对：
 
-- can access on api
+* can access on api
 
 如果你想要恢复你的权限名称覆盖，或者再次更改它们，你需要提示 FAB 上一个权限是什么，以便安全收敛(converge)过程知道该做什么：
 
@@ -561,10 +559,10 @@ class Project(AuditMixin, Model):
 
 这将在你的模型中添加以下列：
 
-- created_on：记录创建的日期和时间
-- changed_on：记录最后更新的日期和时间
-- created_by：谁创建了这条记录
-- changed_by：谁最后修改了这条记录
+* created\_on：记录创建的日期和时间
+* changed\_on：记录最后更新的日期和时间
+* created\_by：谁创建了这条记录
+* changed\_by：谁最后修改了这条记录
 
 这些列将在创建或更新记录时由框架自动更新。因此，你应该将它们排除在添加和编辑表单之外。使用我们的示例，您将像这样定义视图：
 
@@ -581,11 +579,11 @@ class ProjectModelView(ModelView):
 
 密码复杂度验证默认强制要求：
 
-- 最少 2 个大写字符
-- 最少 2 个小写字符
-- 最少 1 个特殊字符
-- 最少 2 个数字
-- 最少 10 个字符
+* 最少 2 个大写字符
+* 最少 2 个小写字符
+* 最少 1 个特殊字符
+* 最少 2 个数字
+* 最少 10 个字符
 
 如果你想要设置自己的密码复杂度验证，可以自定义验证方法，例如在你的配置文件中：
 
@@ -640,22 +638,21 @@ FAB_SECURITY_MANAGER_CLASS='app.security.MySecurityManager'
 
 对不同的认证方法，FAB 使用不同的用户视图：
 
-- UserDBModelView: For database auth method
-- UserOIDModelView: For Open ID auth method
-- UserLDAPModelView: For LDAP auth method
+* UserDBModelView: For database auth method
+* UserOIDModelView: For Open ID auth method
+* UserLDAPModelView: For LDAP auth method
 
 您可以扩展或从头开始创建自己的用户视图，然后通过覆盖它们在 **SecurityManager** 中对应的属性（就像给定的示例一样）告诉 FAB 使用它们。
 
 查看并运行示例：[Employees example](https://github.com/dpgaspar/Flask-AppBuilder/tree/master/examples/employees) 。
 
-学习源码：[BaseSecurityManager](https://github.com/dpgaspar/Flask-AppBuilder/blob/master/flask_appbuilder/security/manager.py) 。
+学习源码：[BaseSecurityManager](https://github.com/dpgaspar/Flask-AppBuilder/blob/master/flask\_appbuilder/security/manager.py) 。
 
 ### 扩展用户模型
 
 如果你想用特定于你的应用程序的额外列扩展用户模型（自 1.3.0 开始），你可以很容易地做到这一点，使用与之前介绍的相同的办法。
 
-First extend the User Model (create a sec_models.py file)::
-首先扩展用户模型（创建一个 `sec_models.py` 文件）：
+First extend the User Model (create a sec\_models.py file):: 首先扩展用户模型（创建一个 `sec_models.py` 文件）：
 
 ```python
 from flask_appbuilder.security.sqla.models import User
@@ -670,13 +667,13 @@ class MyUser(User):
 
 然后定义一个新的用户视图，就像默认的用户视图一样，只不过多了一个额外的列（创建一个 `sec_views.py` 文件）：
 
-- AUTH_DB: Extend UserDBModelView
-- AUTH_LDAP: Extend UserLDAPModelView
-- AUTH_REMOTE_USER: Extend UserRemoteUserModelView
-- AUTH_OID: Extend UserOIDModelView
-- AUTH_OAUTH: Extend UserOAuthModelView
+* AUTH\_DB: Extend UserDBModelView
+* AUTH\_LDAP: Extend UserLDAPModelView
+* AUTH\_REMOTE\_USER: Extend UserRemoteUserModelView
+* AUTH\_OID: Extend UserOIDModelView
+* AUTH\_OAUTH: Extend UserOAuthModelView
 
-所以如果你使用的是 AUTH_DB ：
+所以如果你使用的是 AUTH\_DB ：
 
 ```python
 from flask_appbuilder.security.views import UserDBModelView
@@ -747,14 +744,13 @@ class MySecurityManager(SecurityManager):
     userdbmodelview = MyUserDBModelView
 ```
 
-Note that this is for AUTH_DB, so if you're using:
-注意上面的示例针对 AUTH_DB ，如果你使用：
+注意上面的示例针对 AUTH\_DB ，如果你使用：
 
-- AUTH_DB: Override userdbmodelview
-- AUTH_LDAP: Override userldapmodelview
-- AUTH_REMOTE_USER: Override userremoteusermodelview
-- AUTH_OID: Override useroidmodelview
-- AUTH_OAUTH: Override useroauthmodelview
+* AUTH\_DB: Override userdbmodelview
+* AUTH\_LDAP: Override userldapmodelview
+* AUTH\_REMOTE\_USER: Override userremoteusermodelview
+* AUTH\_OID: Override useroidmodelview
+* AUTH\_OAUTH: Override useroauthmodelview
 
 最后（如上一个示例所示）告诉 F.A.B. 去使用你自己的 SecurityManager 类，所以在 `__init__.py` 中初始化 **AppBuilder** 时：
 
@@ -772,7 +768,6 @@ appbuilder = AppBuilder(app, db.session, menu=Menu(reverse=False), security_mana
 from app import views
 ```
 
-现在，您将使用扩展的用户模型作为认证用户，*g.user* 将使用带有 *extra* 列的模型：
+现在，您将使用扩展的用户模型作为认证用户，_g.user_ 将使用带有 _extra_ 列的模型：
 
-![](./images/security.webp)
-
+![](images/security.webp)
