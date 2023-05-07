@@ -1,9 +1,5 @@
 # Security - Flask AppBuilder
 
-## 披露责任
-
-我们希望确保 Flask-AppBuilder 对每个人都安全。如果您发现了安全漏洞 请报告给 `danielvazgaspar@gmail.com` 。
-
 ## 支持的认证类型
 
 | Type         | Explanation                                                                                                                           |
@@ -38,7 +34,7 @@ from flask_appbuilder.security.manager import (
 AUTH_TYPE = AUTH_DB
 ```
 
-此外，你可以为内建的 Admin 和 Public 权限自定义角色名：
+此外，你可以为内置的 Admin 和 Public 权限自定义角色名：
 
 ```python
 AUTH_ROLE_ADMIN = 'My Admin Role Name'
@@ -198,10 +194,10 @@ OAUTH_PROVIDERS = [
 | Key           | Explanation                                                                                                                                                                                                 |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | name          | OAuth Provider 的名称，你可以指定任意你想要使用的名称；但 FAB 为以下名称编写好了 `BaseSecurityManager.get_oauth_user_info()` 逻辑：`azure` ，`github` ，`google` ，`keycloak` ，`keycloak_before_17` ，`linkedin` ，`okta` ，`openshift` ，`twitter` |
-| icon          | 该 Provider 的 font-awesome 图标                                                                                                                                                                                |
-| token\_key    | 该 Provider 使用的 token key 名称，默认情况下为 `oauth_token`                                                                                                                                                            |
-| token\_secret | token secret key 名称，默认情况下为 `oauth_token_secret`                                                                                                                                                             |
-| remote\_app   | 真正的 Provider API 的配置                                                                                                                                                                                        |
+| icon          | OAuth Provider 的 font-awesome 图标                                                                                                                                                                            |
+| token\_key    | OAuth Provider 使用的 token key 名称，默认情况下为 `oauth_token`                                                                                                                                                        |
+| token\_secret | OAuth Provider 使用的 token secret key 名称，默认情况下为 `oauth_token_secret`                                                                                                                                          |
+| remote\_app   | OAuth Provider API 的配置                                                                                                                                                                                      |
 
 你可以基于 OAuth 群组来给 FlaskAppBuilder 定义角色：
 
