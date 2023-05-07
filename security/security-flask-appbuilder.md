@@ -764,6 +764,6 @@ appbuilder = AppBuilder(app, db.session, menu=Menu(reverse=False), security_mana
 from app import views
 ```
 
-现在，您将使用扩展的用户模型作为认证用户，_g.user_ 将使用带有 _extra_ 列的模型：
+现在，您将使用扩展的用户模型作为认证用户，_g.user_ 将使用带有 _extra_ 列的模型。
 
 ![](images/security.webp)
